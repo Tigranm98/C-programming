@@ -1,0 +1,46 @@
+/* ******************************************************************************
+ * @file    main.c
+ * @author  Instigate Robotics CJSC
+ * @version V0.1.0
+ * @date    10-September-2019
+ * @brief   This is the main file for the Phase Chaanger project.
+ */
+
+/* Standard libraries headers */
+#include <STM32F10x_StdPeriph_Driver/misc.h>
+#include <STM32F10x_StdPeriph_Driver/stm32f10x.h>
+#include <STM32F10x_StdPeriph_Driver/stm32f10x_gpio.h> 
+#include <STM32F10x_StdPeriph_Driver/stm32f10x_i2c.h> 
+/* Standard libraries from this project */
+#include <debug/assert.h>
+#include <debug/delay.h>
+#include <display/LiquidCrystal_I2C.h>
+#include "rcc_configuration.h"
+#include <servo/servo.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	servo_timer_gpio_init();
+	LCDI2C_init(0x27, 20, 4);
+	LCDI2C_backlight();
+	LCDI2C_noCursor();
+	LCDI2C_noBlink();
+	LCDI2C_setCursor(0, 0);
+	char text_x[] = "Pos X";
+	LCDI2C_write_String(text_x);
+	LCDI2C_setCursor(0, 1);
+	char text_y[] = "Pos Y";
+	LCDI2C_write_String(text_y);
+	LCDI2C_setCursor(0, 2);
+	char text_z[] = "Pos Z";
+	LCDI2C_write_String(text_z);
+	LCDI2C_setCursor(0, 3);
+	char text_s[] = "Pos Servo";
+	LCDI2C_write_String(text_s);
+	while (1) {
+		int r=rand() % 20;
+		servo_set_init(r);
+		delay(10000000);
+	}
+}

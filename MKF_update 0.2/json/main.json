@@ -1,0 +1,98 @@
+{
+    "main": { 
+              "mainLine": {
+                  "phase1": { 
+                      "power_consuption": "10 kW",
+                      "voltage": "220 V"
+                  },
+                  "phase2": { 
+                      "power_consuption": "21 kW",
+                      "voltage": "219 V" },
+                  "phase3": { 
+                      "power_consuption": "21 kW",
+                      "voltage": "219 V"
+                  }
+                          },
+              "backupLne": {
+                      "power_consuption": "10 kW",
+                      "voltage": "220 V"
+                  },
+                  "phase2": { 
+                      "power_consuption": "21 kW",
+                      "voltage": "219 V"
+                  },
+                  "phase3": { 
+                      "power_consuption": "21 kW",
+                      "Voltage": "219 V"
+                  }
+                 },
+              "errors": { 
+                  "hardware": "Not working relay",
+                  "software": "System error"
+                  }
+    },
+	"login"	: {
+		"username": "user",
+		"password": "user"
+	},
+    "transfers": { 
+		"current_line": { "Main"},
+		"main_to_backup": { 
+			"date_time": "12.09.2222, 14:32:24",
+			"duration": "1h 22min"
+		},
+		"backup_to_main": {
+			"date_time": "12.09.2222, 14:32:24",
+			"duration": "current"
+		},
+		"error": {"Message"},
+		"message": {"Voltage loss on the main line"}
+	},
+    "special_info": {
+
+        "mainLine": {
+            "phase1": { 
+                "total_active_power, ": "10 kW",
+                "volt_amperes_reactive": "VAR",
+                "volt_amperes": "VA",
+                "peak_voltage": "244V"
+            },
+            "phase2": { 
+                "total_active_power, ": "10 kW",
+                "volt_amperes_reactive": "VAR",
+                "volt_amperes": "VA",
+                "peak_voltage": "244V"
+           },
+            "phase3": { 
+                "total_active_power, ": "10 kW",
+                "volt_amperes_reactive": "VAR",
+                "volt_amperes": "VA",
+                "peak_voltage": "244V"
+           },
+        "backupLne": {
+            "phase1": { 
+                "total_active_power, ": "10 kW",
+                "volt_amperes_reactive": "VAR",
+                "volt_amperes": "VA",
+                "peak_voltage": "244V"
+            },
+            "phase2": { 
+                "total_active_power, ": "10 kW",
+                "volt_amperes_reactive": "VAR",
+                "volt_amperes": "VA",
+                "peak_voltage": "244V"
+           },
+            "phase3": { 
+                "total_active_power, ": "10 kW",
+                "volt_amperes_reactive": "VAR",
+                "volt_amperes": "VA",
+                "peak_voltage": "244V"
+           },
+        "errors": { 
+            "ERROR1": "Not working relay",
+            "ERROR2": "Not working relay",
+            "ERROR3": "Not working relay",
+            "ERROR4": "Not working relay"
+           }
+    }
+}

@@ -1,0 +1,80 @@
+#include <STM32F10x_StdPeriph_Driver/stm32f10x.h> 
+#include <STM32F10x_StdPeriph_Driver/stm32f10x_gpio.h> 
+#include <STM32F10x_StdPeriph_Driver/stm32f10x_rcc.h>
+#include <stdlib.h>
+#include "servo.h"
+#include "LiquidCrystal_I2C.h"
+
+#define SERVO_0 0 
+char servo[] = "0";
+
+GPIO_InitTypeDef GPIO_Servo;
+GPIO_InitTypeDef GPIO_Blink;
+
+void servo_timer_gpio_init()
+{
+	// Config GPIOC For Blink 
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+	GPIO_Blink.GPIO_Pin = GPIO_Pin_13;
+	GPIO_Blink.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_Blink.GPIO_Mode = GPIO_Mode_Out_PP;
+	GPIO_Init(GPIOC, &GPIO_Blink);
+	// Config GPIO_A and TIM2 For Servo SHIM 
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA , ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
+	GPIO_Servo.GPIO_Pin = (GPIO_Pin_1);
+	GPIO_Servo.GPIO_Mode = GPIO_Mode_AF_PP;
+	GPIO_Servo.GPIO_Speed = GPIO_Speed_2MHz;
+	GPIO_Init(GPIOA, &GPIO_Servo);
+	TIM2->CCER |= (TIM_CCER_CC2E);
+	TIM2->CCMR1|= (TIM_CCMR1_OC2M_1 | TIM_CCMR1_OC2M_2);
+	TIM2->PSC = 6;
+	TIM2->CR1 |= TIM_CR1_CEN;
+}
+
+void servo_set_pos(int pos) {
+	TIM2->CCR2 = SERVO_0 + pos * 60;
+}
+
+void servo_delay() {
+	volatile uint32_t i;
+	for (i=1; i != 0xFFFF; i++);
+}
+
+void servo_180() {
+	/*for (int i=0; i<180; i++){
+		GPIO_SetBits(GPIOC, GPIO_Pin_13);
+		servo_set_pos(i);
+		LCDI2C_setCursor(10, 3);
+		itoa(i, servo, 10);
+		LCDI2C_write_String(servo);
+		servo_delay();
+		if (i==179){
+			for (int j=180; j>0; j--){
+				GPIO_ResetBits(GPIOC, GPIO_Pin_13);
+				servo_set_pos(j);
+				servo_delay();
+				LCDI2C_setCursor(10, 3);
+				itoa(j, servo, 10);
+				LCDI2C_write_String(servo);
+				if (j==99) {
+					LCDI2C_setCursor(12, 3);
+					LCDI2C_write(' ');
+				}
+				if (j==9) {
+					LCDI2C_setCursor(11, 3);
+					LCDI2C_write(' ');
+				}
+			}
+		}
+	}*/
+		for (int tim=0; tim>30000; tim=tim+500){	
+		TIM2->CCR2 = tim;
+		servo_delay();
+		}
+		LCDI2C_setCursor(10, 3);
+		LCDI2C_write('1');
+		LCDI2C_write('8');
+		LCDI2C_write('0');
+}
+
